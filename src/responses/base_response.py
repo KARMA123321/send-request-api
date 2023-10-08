@@ -24,10 +24,10 @@ class BaseResponse:
 
     def assert_status_code(self, status_code):
         if isinstance(status_code, (list, tuple, set)):
-            print(f"Assert {self.status_code} status code in {status_code}")
-            assert self.status_code in status_code
+            print(f"Assert {self.status_code} status code is in {status_code}")
+            assert self.status_code in status_code, f"Status code {self.status_code} is not in {status_code}"
         else:
             print(f"Assert {self.status_code} status code equal to {status_code}")
-            assert self.status_code == status_code
+            assert self.status_code == status_code, f"Status code {self.status_code} is not equal to {status_code}"
 
         return self
