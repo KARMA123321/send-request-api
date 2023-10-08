@@ -27,8 +27,11 @@ class GetCompaniesResponse(BaseResponse):
     def assert_companies_statuses(self, expected_status):
         print("Assert companies statuses")
 
-        error = "Expected company status to be '{0}', but was '{1}'"
+        errors = ""
         for company in self.companies:
-            statuses_equality = company[Company.Status] == expected_status
-            print(f"{company[Company.Name]} status equal to {expected_status} [{statuses_equality}]")
-            assert statuses_equality, error.format(expected_status, company[Company.Status])
+            status_equality = company[Company.Status] == expected_status
+            print(f"{company[Company.Name]} status equal to {expected_status} [{status_equality}]")
+            if not status_equality:
+                errors += f"\n{company[Company.Name]}, status: {company[Company.Status]}"
+
+        assert len(errors) == 0, errors + self.__str__()
