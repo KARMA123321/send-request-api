@@ -28,6 +28,7 @@ class BaseResponse:
                 validate(item, schema)
         else:
             validate(self.response_json, schema)
+        return self
 
     def assert_status_code(self, status_code):
         if isinstance(status_code, (list, tuple, set)):

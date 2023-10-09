@@ -35,3 +35,19 @@ class GetCompaniesResponse(BaseResponse):
                 errors += f"\n{company[Company.Name]}, status: {company[Company.Status]}"
 
         assert len(errors) == 0, errors + self.__str__()
+        return self
+
+    def assert_equal_to_limit(self, limit):
+        print(f"Assert that the number of companies is equal to {limit}")
+        assert len(self.companies) == limit, \
+            f"Expected number of companies is {limit} but there was {len(self.companies)}" + self.__str__()
+        return self
+
+    def assert_starts_from_offset(self, offset):
+        expected_id = offset + 1
+        first_id = self.companies[0][Company.Id]
+
+        print(f"Assert that companies list starts with company with id '{expected_id}'")
+        assert first_id == expected_id, \
+            f"Expected first company's id to be {expected_id} but was {first_id}" + self.__str__()
+        return self
