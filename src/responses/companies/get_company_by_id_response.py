@@ -8,8 +8,7 @@ from src.responses.base_response import BaseResponse
 
 class GetCompanyByIdResponse(BaseResponse):
     def __init__(self, company_id, **request_attributes):
-        response = requests.get(config.FULL_URL + f"/companies/{company_id}", **request_attributes)
-        super().__init__(response)
+        super().__init__(requests.get(config.FULL_URL + f"/companies/{company_id}", **request_attributes))
 
     def assert_schema(self, schemas):
         print(f"Assert schema matches {SchemasNames.Company}")

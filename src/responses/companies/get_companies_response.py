@@ -15,8 +15,7 @@ OFFSET_QUERY = "offset"
 
 class GetCompaniesResponse(BaseResponse):
     def __init__(self, **request_attributes):
-        response = requests.get(config.FULL_URL + "/companies", **request_attributes)
-        super().__init__(response)
+        super().__init__(requests.get(config.FULL_URL + "/companies", **request_attributes))
         self.companies = self.response_json[CompanyList.Data]
 
     def assert_schema(self, schemas):
