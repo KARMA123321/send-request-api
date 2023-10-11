@@ -1,10 +1,9 @@
 import requests
-from jsonschema.validators import validate
 
 import config
 from src.enums.schemas.schemas_keys.response_user import ResponseUser
-from src.enums.schemas.schemas_names import SchemasNames
 from src.responses.base_response import BaseResponse
+from src.validation_managers.create_user_validation_manager import CreateUserValidationManager
 
 
 class CreateUserResponse(BaseResponse):
@@ -15,8 +14,4 @@ class CreateUserResponse(BaseResponse):
         self.company_id = self.response_json[ResponseUser.CompanyId]
         self.user_id = self.response_json[ResponseUser.UserId]
 
-    def assert_schema(self, schemas):
-        print(f"Assert schema matches {SchemasNames.ResponseUser}")
-        validate(self.response_json, schemas[SchemasNames.ResponseUser])
-        return self
-
+        self.validate: CreateUserValidationManager = CreateUserValidationManager(self)

@@ -7,20 +7,20 @@ from src.responses.companies.get_company_by_id_response import GetCompanyByIdRes
 
 
 def test_get_companies_schema_and_status_code(schemas):
-    GetCompaniesResponse().assert_schema(schemas).assert_status_code(200)
+    GetCompaniesResponse().validate.schema(schemas).validate.status_code_equals(200)
 
 
 @pytest.mark.parametrize("company_status", [CompanyStatuses.ACTIVE, CompanyStatuses.BANKRUPT,
                                             CompanyStatuses.CLOSED])
 def test_get_companies_filter_by_status(company_status):
-    GetCompaniesResponse(params={STATUS_QUERY: company_status}).assert_companies_statuses(company_status)
+    GetCompaniesResponse(params={STATUS_QUERY: company_status}).validate.companies_statuses_equal_to(company_status)
 
 
 @pytest.mark.parametrize("value", [0, 3])
 def test_get_companies_filter_by_limit_and_offset(value):
-    GetCompaniesResponse(params={LIMIT_QUERY: value}).assert_equal_to_limit(value)
-    GetCompaniesResponse(params={OFFSET_QUERY: value}).assert_starts_from_offset(value)
+    GetCompaniesResponse(params={LIMIT_QUERY: value}).validate.companies_amount_equal_to_limit(value)
+    GetCompaniesResponse(params={OFFSET_QUERY: value}).validate.companies_start_from_offset(value)
 
 
 def test_get_company_by_id_schema_and_status_code(random_company, schemas):
-    GetCompanyByIdResponse(random_company[Company.Id]).assert_schema(schemas).assert_status_code(200)
+    GetCompanyByIdResponse(random_company[Company.Id]).validate.schema(schemas).validate.status_code_equals(200)
