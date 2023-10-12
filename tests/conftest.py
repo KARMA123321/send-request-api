@@ -2,6 +2,7 @@ import json
 import random
 import string
 
+import allure
 import pytest
 
 from config import COMPANIES_AMOUNT
@@ -13,11 +14,13 @@ from src.responses.users.create_user_response import CreateUserResponse
 from src.responses.users.delete_user_response import DeleteUserResponse
 
 
+@allure.title("Get random company")
 @pytest.fixture
 def random_company():
     return GetCompaniesResponse(params={LIMIT_QUERY: COMPANIES_AMOUNT}).companies[random.randint(0, COMPANIES_AMOUNT - 1)]
 
 
+@allure.title("Get random active company")
 @pytest.fixture
 def random_active_company():
     response = GetCompaniesResponse(params={STATUS_QUERY: CompanyStatuses.ACTIVE})
@@ -25,14 +28,19 @@ def random_active_company():
     return response.companies[random.randint(0, companies_count - 1)]
 
 
+@allure.title("Create new user and get response")
 @pytest.fixture
 def new_user(random_active_company):
-    def generate_string(letters_number):
-        return "".join(random.choice(string.ascii_letters) for i in range(letters_number))
-    first_name = generate_string(5)
-    last_name = generate_string(10)
-    company_id = random_active_company[Company.Id]
-    response = CreateUserResponse(data=json.dumps({ResponseUser.FirstName: first_name, ResponseUser.LastName: last_name,
-                                                   ResponseUser.CompanyId: company_id}))
+    with allure.step("Create new user"):
+        def generate_string(letters_number):
+            return "".join(random.choice(string.ascii_letters) for i in range(letters_number))
+        first_name = generate_string(5)
+        last_name = generate_string(10)
+        company_id = random_active_company[Company.Id]
+        response = CreateUserResponse(data=json.dumps({ResponseUser.FirstName: first_name,
+                                                       ResponseUser.LastName: last_name,
+                                                       ResponseUser.CompanyId: company_id}))
     yield response
-    DeleteUserResponse(response.user_id)
+
+    with allure.step("Delete new user"):
+        DeleteUserResponse(response.user_id)

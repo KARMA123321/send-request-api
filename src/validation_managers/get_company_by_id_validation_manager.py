@@ -1,3 +1,4 @@
+import allure
 from jsonschema.validators import validate
 
 from src.enums.schemas.schemas_names import SchemasNames
@@ -10,6 +11,6 @@ class GetCompanyByIdValidationManager(BaseValidationManager, ResponseValidationI
         super().__init__(response)
 
     def schema(self, schemas):
-        print(f"Assert schema matches {SchemasNames.Company}")
-        validate(self.response.response_json, schemas[SchemasNames.Company])
+        with allure.step(f"Response matches schema {SchemasNames.Company}"):
+            validate(self.response.response_json, schemas[SchemasNames.Company])
         return self.response
