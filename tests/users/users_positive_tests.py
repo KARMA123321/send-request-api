@@ -11,7 +11,7 @@ def test_create_user_schema_and_status_code(new_user, schemas):
 
 @allure.title("POST /api/users create user with specified params")
 def test_specified_user_created(new_user, schemas):
-    GetUserByIdResponse(new_user.user_id).validate.user_equals_params(**new_user.response_json)
+    GetUserByIdResponse(new_user.user_id).validate.user_equals(**new_user.response_json)
 
 
 @allure.title("POST /api/users/{user_id} schema and status code are valid")

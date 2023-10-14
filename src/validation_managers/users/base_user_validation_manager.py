@@ -29,3 +29,13 @@ class BaseUserValidationManager(BaseValidationManager, ResponseValidationInterfa
                          f"company: {user_params[ResponseUser.CompanyId]}"):
             assert user_params == self.response.response_json, \
                 f"\n{user_params} is not equal to {self.response.response_json}" + str(self.response)
+
+    def user_equals(self, user_id, first_name, last_name, company_id):
+        with allure.step(f"Response user matches specified parameters: "
+                         f"id: {user_id}, "
+                         f"name: {first_name}, "
+                         f"last name: {last_name}, "
+                         f"company: {company_id}"):
+            user = dict(user_id=user_id, first_name=first_name, last_name=last_name, company_id=company_id)
+            assert user == self.response.response_json, \
+                f"\n{user} is not equal to {self.response.response_json}" + str(self.response)
