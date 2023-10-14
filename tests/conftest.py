@@ -30,12 +30,10 @@ def random_active_company():
 
 @allure.title("Create new user and get response")
 @pytest.fixture
-def new_user(random_active_company):
+def new_user(random_active_company, faker):
     with allure.step("Create new user"):
-        def generate_string(letters_number):
-            return "".join(random.choice(string.ascii_letters) for i in range(letters_number))
-        first_name = generate_string(5)
-        last_name = generate_string(10)
+        first_name = faker.first_name()
+        last_name = faker.last_name()
         company_id = random_active_company[Company.Id]
         response = CreateUserResponse(data=json.dumps({ResponseUser.FirstName: first_name,
                                                        ResponseUser.LastName: last_name,
