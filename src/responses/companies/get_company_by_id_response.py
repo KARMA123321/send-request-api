@@ -2,7 +2,7 @@ import requests
 
 import config
 from src.responses.base_response import BaseResponse
-from src.validation_managers.get_company_by_id_validation_manager import GetCompanyByIdValidationManager
+from src.validation_managers.companies.get_company_by_id_validation_manager import GetCompanyByIdValidationManager
 
 
 class GetCompanyByIdResponse(BaseResponse):

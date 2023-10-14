@@ -2,7 +2,6 @@ import allure
 import pytest
 
 from pytest_check import check
-from src.asserts import Assert
 from src.enums.schemas.schemas_keys.company import Company
 from src.responses.companies.get_companies_response import GetCompaniesResponse, STATUS_QUERY, LIMIT_QUERY, OFFSET_QUERY
 from src.enums.company_statuses import CompanyStatuses

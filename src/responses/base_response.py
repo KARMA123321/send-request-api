@@ -4,7 +4,7 @@ from requests import Response
 
 class BaseResponse:
     def __init__(self, response: Response):
-        with allure.step(f"Response {response.url}"):
+        with allure.step(f"Response {response.request.method} {response.url}"):
             self.response = response
             self.url = response.request.url
             self.status_code = response.status_code

@@ -3,7 +3,7 @@ import requests
 
 from src.responses.base_response import BaseResponse
 from src.enums.schemas.schemas_keys.company_list import CompanyList
-from src.validation_managers.get_companies_validation_manager import GetCompaniesValidationManager
+from src.validation_managers.companies.get_companies_validation_manager import GetCompaniesValidationManager
 
 STATUS_QUERY = "status"
 LIMIT_QUERY = "limit"
