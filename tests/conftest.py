@@ -9,6 +9,7 @@ from config import COMPANIES_AMOUNT
 from src.enums.company_statuses import CompanyStatuses
 from src.enums.schemas.schemas_keys.company import Company
 from src.enums.schemas.schemas_keys.response_user import ResponseUser
+from src.generators.user import User
 from src.responses.companies.get_companies_response import GetCompaniesResponse, LIMIT_QUERY, STATUS_QUERY
 from src.responses.users.create_user_response import CreateUserResponse
 from src.responses.users.delete_user_response import DeleteUserResponse
@@ -32,12 +33,9 @@ def random_active_company():
 @pytest.fixture
 def new_user(random_active_company, faker):
     with allure.step("Create new user"):
-        first_name = faker.first_name()
-        last_name = faker.last_name()
-        company_id = random_active_company[Company.Id]
-        response = CreateUserResponse(data=json.dumps({ResponseUser.FirstName: first_name,
-                                                       ResponseUser.LastName: last_name,
-                                                       ResponseUser.CompanyId: company_id}))
+        user = User().populate().set_company_id(random_active_company[Company.Id]).build()
+        response = CreateUserResponse(data=json.dumps(user))
+
     yield response
 
     with allure.step("Delete new user"):
