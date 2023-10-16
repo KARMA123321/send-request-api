@@ -4,10 +4,12 @@ LABEL "author"="KARMA123321"
 
 WORKDIR ./usr/api_tests
 
-COPY . .
-
 RUN apk update && apk upgrade && apk add bash
+
+COPY requirements.txt .
 
 RUN pip3 install -r requirements.txt
 
-CMD pytest -s -v tests/*
+COPY . .
+
+CMD pytest -s -v tests/* --alluredir=allure
